@@ -1,0 +1,42 @@
+[0m2021.06.12 17:28:48 INFO  Started: Metals version 0.10.4 in workspace '/home/vini/Downloads/gatling-charts-highcharts-bundle-3.6.0/user-files/gatling' for client Visual Studio Code 1.57.0.[0m
+[0m2021.06.12 17:28:51 INFO  time: initialize in 3.15s[0m
+[0m2021.06.12 17:28:52 WARN  Build server is not auto-connectable.[0m
+[0m2021.06.12 17:28:52 WARN  no build tool detected in workspace '/home/vini/Downloads/gatling-charts-highcharts-bundle-3.6.0/user-files/gatling'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.06.12 17:28:52 WARN  no build target for: /home/vini/Downloads/gatling-charts-highcharts-bundle-3.6.0/user-files/gatling/RecordedSimulation2.scala[0m
+[0m2021.06.12 17:28:58 INFO  no build target: using presentation compiler with only scala-library: 2.12.14[0m
+jun 12, 2021 5:28:58 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4
+jun 12, 2021 5:28:58 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 10
+jun 12, 2021 5:28:59 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 18
+jun 12, 2021 5:28:59 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 21
+[0m2021.06.12 17:29:05 INFO  time: code lens generation in 6.39s[0m
+[0m2021.06.12 17:29:05 INFO  time: code lens generation in 6.58s[0m
+[0m2021.06.12 17:29:05 INFO  time: code lens generation in 6.67s[0m
+[0m2021.06.12 17:29:05 INFO  time: code lens generation in 7.02s[0m
+[0m2021.06.12 17:29:06 INFO  time: code lens generation in 7.47s[0m
+[0m2021.06.12 17:29:06 INFO  time: code lens generation in 12s[0m
+jun 12, 2021 5:29:06 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 28
+jun 12, 2021 5:29:06 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 25
+[0m2021.06.12 17:31:56 WARN  no build target for: /home/vini/Downloads/gatling-charts-highcharts-bundle-3.6.0/user-files/gatling/computerDataBase-test/RecordedSimulation.scala[0m
+[0m2021.06.12 17:31:58 WARN  no build target for: /home/vini/Downloads/gatling-charts-highcharts-bundle-3.6.0/user-files/gatling/computerDataBase-test/RecordedSimulation2.scala[0m
+[0m2021.06.12 17:32:22 WARN  no build target for: /home/vini/Downloads/gatling-charts-highcharts-bundle-3.6.0/user-files/gatling/computerDataBase-test/RecordedSimulation2.scala[0m
+[0m2021.06.12 17:34:17 WARN  no build target for: /home/vini/Downloads/gatling-charts-highcharts-bundle-3.6.0/user-files/gatling/computerDataBase-test/RecordedSimulation2.scala[0m
+[0m2021.06.12 17:35:15 WARN  no build target for: /home/vini/Downloads/gatling-charts-highcharts-bundle-3.6.0/user-files/gatling/computerDataBase-test/RecordedSimulation2.scala[0m
+[0m2021.06.12 17:36:33 WARN  no build target for: /home/vini/Downloads/gatling-charts-highcharts-bundle-3.6.0/user-files/gatling/computerDataBase-test/RecordedSimulation2.scala[0m
+[0m2021.06.12 17:39:04 WARN  no build target for: /home/vini/Downloads/gatling-charts-highcharts-bundle-3.6.0/user-files/gatling/computerDataBase-test/RecordedSimulation2.scala[0m
+[0m2021.06.12 17:40:26 WARN  no build target for: /home/vini/Downloads/gatling-charts-highcharts-bundle-3.6.0/user-files/gatling/computerDataBase-test/RecordedSimulation2.scala[0m
+[0m2021.06.12 17:43:54 WARN  no build target for: /home/vini/Downloads/gatling-charts-highcharts-bundle-3.6.0/user-files/gatling/computerDataBase-test/RecordedSimulation2.scala[0m
+jun 12, 2021 5:44:03 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 955
+[0m2021.06.12 17:44:03 WARN  no build target for: /home/vini/Downloads/gatling-charts-highcharts-bundle-3.6.0/user-files/gatling/computerDataBase-test/ComputerDataBase.scala[0m
+[0m2021.06.12 17:44:56 WARN  no build target for: /home/vini/Downloads/gatling-charts-highcharts-bundle-3.6.0/user-files/gatling/computerDataBase-test/ComputerDataBase.scala[0m
+jun 12, 2021 6:03:43 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1328
+jun 12, 2021 6:04:25 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1383
+[0m2021.06.12 18:04:41 WARN  no build target for: /home/vini/Downloads/gatling-charts-highcharts-bundle-3.6.0/user-files/gatling/computerDataBase-test/ComputerDataBase.scala[0m
