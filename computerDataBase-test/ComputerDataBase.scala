@@ -23,7 +23,7 @@ class ComputerDataBase extends Simulation {
 
 	val pauseTime : Int = 1
 	
-	val numOfUsers : Int = 2
+	val numOfUsers : Int = 4		
 	
 	//val feeder = Iterator.continually(Map("pageNum" -> (Random.alphanumeric.take(20).mkString + "@foo.com")))
 	val randPageNumFeeder = Iterator.continually(Map("pageNum" -> (Random.nextInt(10))))
@@ -36,10 +36,12 @@ class ComputerDataBase extends Simulation {
 						.pause(pauseTime)
 	}
 	object ProductPage{
-		val name = "productPage"
-		val productPage = 	exec(http(name)
-								.get("/computers/381"))
+		val name = "productPage_"
+		val productPage = 	exec{(
+								http(name+"${computerURL}")
+								.get("${computerURL}"))}
 						 	.pause(pauseTime)
+							
 	}
 	object ChangeProduct{
 		val name = "changeProduct"
@@ -50,7 +52,7 @@ class ComputerDataBase extends Simulation {
 								.formParam("discontinued", "2021-01-01")
 								.formParam("company", "2"))
 							.pause(pauseTime)
-	}
+	}	
 	object PageNavigation{
 		val name = "pageNavigation_"
 		val pageNavigation = repeat(5,"i")
@@ -62,10 +64,11 @@ class ComputerDataBase extends Simulation {
 							}			
 	}
 	object ProductSearch{
-		val name = "productSearch"
+		val name = "productSearch_"
 		val productSearch = feed(searchFeeder)
-							.exec(http(name)
-								.get("/computers?f=${searchCriterion}")) //searchCriterion is the name of a Column in "search.csv"
+							.exec(http(name+"${searchCriterion}")
+								.get("/computers?f=${searchCriterion}") //searchCriterion is the name of a Column in "search.csv"
+								.check(css("a:contains('${searchComputerName}')", "href").saveAs("computerURL")))
 	}
 	val scn = scenario("HomePageAndPageNav")
 				.exec(HomePage.homePage,
