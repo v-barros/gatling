@@ -79,8 +79,25 @@ class ComputerDataBase extends Simulation {
 					ProductSearch.productSearch,
 					ProductPage.productPage,
 					ChangeProduct.changeProduct)
-				
-	setUp(scn.inject(constantConcurrentUsers(10).during(10.seconds)),
-		scn2.inject(constantUsersPerSec(1).during(10.seconds)))
-	.protocols(httpProtocol)
+	
+	
+	setUp(	scn2.inject(constantConcurrentUsers(15).during(3.minutes))
+			.throttle(reachRps(10).in(20.seconds),
+				holdFor(1.minute),
+				jumpToRps(5),
+				holdFor(1.minute)	
+			)
+	).protocols(httpProtocol)
+	/*			
+	setUp(
+		scn.inject(constantUsersPerSec(1).during(15.seconds))
+		.throttle(reachRps(10).in(10.seconds), // Throttle can also be configured for setUp
+  			holdFor(1.minute),
+  			jumpToRps(5),
+  			holdFor(1.minute)),
+		scn2.inject(constantConcurrentUsers(1).during(10.seconds), // 1
+    		rampConcurrentUsers(1).to(10).during(20.seconds), //  Inject so that number of concurrent users in the system ramps linearly from a number to another
+			constantConcurrentUsers(10).during(60.seconds)
+	))
+	.protocols(httpProtocol)*/
 }
