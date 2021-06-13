@@ -80,7 +80,7 @@ class ComputerDataBase extends Simulation {
 					ProductPage.productPage,
 					ChangeProduct.changeProduct)
 				
-	setUp(scn.inject(atOnceUsers(numOfUsers)),
-		scn2.inject(atOnceUsers(numOfUsers)))
+	setUp(scn.inject(constantConcurrentUsers(10).during(10.seconds)),
+		scn2.inject(constantUsersPerSec(1).during(10.seconds)))
 	.protocols(httpProtocol)
 }
