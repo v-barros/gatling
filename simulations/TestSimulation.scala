@@ -1,19 +1,3 @@
-/*
- * Copyright 2011-2021 GatlingCorp (https://gatling.io)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package computerdatabase
 
 import scala.concurrent.duration._
@@ -21,17 +5,21 @@ import scala.util.Random
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 
+
 class TestSimulation extends Simulation {
 
- 
-  val httpProtocol = http
-    // Here is the root for all relative URLs
-    .baseUrl("http://localhost:3000")
-    .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
-    .doNotTrackHeader("1")
-    .acceptLanguageHeader("en-US,en;q=0.5")
-    .acceptEncodingHeader("gzip, deflate")
-  
+  val port =  System.getProperty("port","1080")
+  val hostUsers = System.getProperty("hostUsers","null")
+  val hostProducts = System.getProperty("hostProducts","null")
+  val nothing = System.getProperty("nothingFor","30").toInt.seconds
+  val users = System.getProperty("users","1000").toInt
+  val rampDuration = System.getProperty("rampDuration","500").toInt.seconds
+  val numberOfRamps = System.getProperty("numberOfRamps","5").toInt
+  val steadyPeriodDuration = System.getProperty("steadyDuration","5").toInt.minutes
+  val finalPeriodDuration = System.getProperty("finalDuration","10").toInt.minutes
+  val httpProtocol = http   
+
+
   object User {
       val min = 1000000000
       val max = 1999999999
@@ -48,7 +36,7 @@ class TestSimulation extends Simulation {
           .feed(nickNameFeeder)
           .exec(  
                 http("Create user")
-                .post("/user/registration")
+                .post(hostUsers+":"+port+"/user/registration")
                 .headers(Map("Content-type"->"application/json"))
                 .body(StringBody(
                     """{
@@ -66,7 +54,7 @@ class TestSimulation extends Simulation {
       def auth = {
           exec(  
                 http("Auth user")
-                .post("/auth")
+                .post(hostUsers+":"+port+"/auth")
                 .headers(Map("Content-type"->"application/json"))
                 .body(StringBody(
                     """{
@@ -79,7 +67,7 @@ class TestSimulation extends Simulation {
       def getUser = {
           exec(  
                   http("Get user details")
-                  .get("/user/${userId}")
+                  .get(hostUsers+":"+port+"/user/${userId}")
                   .headers(Map("Content-type"->"application/json",
                                 "Authorization" -> "Bearer ${token}"))
             )
@@ -94,14 +82,14 @@ class TestSimulation extends Simulation {
           feed(productTitleFeeder)
           .exec(  
                 http("Create product")
-                .post("/products")
+                .post(hostProducts+":"+port+"/products")
                 .headers(Map("Content-type"->"application/json",
                               "Authorization" -> "Bearer ${token}"))
                 .body(StringBody(
                     """{
                       "title": "${productTitle}",
                       "description": "sadasdasdasdasda",
-                      "price": 1000.09,
+                      "fiatPrice": 1000.09,
                       "ownerId": "${userId}",
                       "productCategory": "SPORTS"
                       }""".stripMargin)).asJson
@@ -113,7 +101,7 @@ class TestSimulation extends Simulation {
       def productPage = {
         exec(  
                http("Product Page")
-               .get("/products/${productId}")
+               .get(hostProducts+":"+port+"/products/${productId}")
                .headers(Map("Authorization" -> "Bearer ${token}"))
             )
       }
@@ -121,7 +109,7 @@ class TestSimulation extends Simulation {
       def listProducts = {
           exec(  
                http("List Products")
-               .get("/products")
+               .get(hostProducts+":"+port+"/products")
                .headers(Map("Authorization" -> "Bearer ${token}"))
             )
       }
@@ -130,7 +118,7 @@ class TestSimulation extends Simulation {
           feed(searchProductsFeeder)
           .exec(  
                http("Search Products")
-               .get("/products/search?searchText=${searchParam}")
+               .get(hostProducts+":"+port+"/products/search?searchText=${searchParam}")
                .headers(Map("Authorization" -> "Bearer ${token}"))
             )
       }
@@ -148,9 +136,17 @@ class TestSimulation extends Simulation {
 
   setUp(
   scn.inject(
-    nothingFor(1.seconds),
-   atOnceUsers(1) 
-  )).protocols(httpProtocol)
-
+    //nothingFor(nothing),
+    // generate a closed workload injection profile
+    // with levels of 10, 15, 20, 25 and 30 concurrent users
+    // each level lasting 10 seconds
+    // separated by linear ramps lasting 10 seconds
+    incrementConcurrentUsers(users)
+      .times(numberOfRamps)
+      .eachLevelLasting(steadyPeriodDuration)
+      .separatedByRampsLasting(rampDuration)
+      .startingFrom(0)
+  ).protocols(httpProtocol)
+)
 
 }
