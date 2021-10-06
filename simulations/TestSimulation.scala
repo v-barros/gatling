@@ -12,11 +12,11 @@ class TestSimulation extends Simulation {
   val hostUsers = System.getProperty("hostUsers","null")
   val hostProducts = System.getProperty("hostProducts","null")
   val nothing = System.getProperty("nothingFor","30").toInt.seconds
-  val users = System.getProperty("users","1000").toInt
-  val rampDuration = System.getProperty("rampDuration","500").toInt.seconds
+  val users = System.getProperty("users","1").toInt
+  val rampDuration = System.getProperty("rampDuration","2").toInt.seconds
   val numberOfRamps = System.getProperty("numberOfRamps","5").toInt
-  val steadyPeriodDuration = System.getProperty("steadyDuration","5").toInt.minutes
-  val finalPeriodDuration = System.getProperty("finalDuration","10").toInt.minutes
+  val steadyPeriodDuration = System.getProperty("steadyDuration","10").toInt.minutes
+  val totalTestDuration = (rampDuration + steadyPeriodDuration) * numberOfRamps
   val httpProtocol = http   
 
 
@@ -126,13 +126,15 @@ class TestSimulation extends Simulation {
 
   // A scenario is a chain of requests and pauses
   val scn = scenario("Scenario Name")
-    .exec(User.createUser)
-    .exec(User.auth)
-    .exec(User.getUser)
-    .exec(Product.createProduct)
-    .exec(Product.listProducts)
-    .exec(Product.searchProducts)
-    .exec(Product.productPage)
+    forever{
+        exec(User.createUser)
+        .exec(User.auth)
+        .exec(User.getUser)
+        .exec(Product.createProduct)
+        .exec(Product.listProducts)
+        .exec(Product.searchProducts)
+        .exec(Product.productPage)
+    }
 
   setUp(
   scn.inject(
@@ -141,9 +143,14 @@ class TestSimulation extends Simulation {
     // with levels of 10, 15, 20, 25 and 30 concurrent users
     // each level lasting 10 seconds
     // separated by linear ramps lasting 10 seconds
-    incrementConcurrentUsers(users)
+    //  incrementConcurrentUsers(users)
+    //   .times(numberOfRamps)
+    // .eachLevelLasting(steadyPeriodDuration)
+    //  .separatedByRampsLasting(rampDuration)
+    //  .startingFrom(0)
+    incrementUsersPerSec(users)
       .times(numberOfRamps)
-      .eachLevelLasting(steadyPeriodDuration)
+      .eachLevelLasting(steadyDuration)
       .separatedByRampsLasting(rampDuration)
       .startingFrom(0)
   ).protocols(httpProtocol)
