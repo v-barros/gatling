@@ -126,7 +126,7 @@ class TestSimulation extends Simulation {
 
   // A scenario is a chain of requests and pauses
   val scn = scenario("Scenario Name")
-    forever{
+    .forever{
         exec(User.createUser)
         .exec(User.auth)
         .exec(User.getUser)
@@ -138,22 +138,14 @@ class TestSimulation extends Simulation {
 
   setUp(
   scn.inject(
-    //nothingFor(nothing),
-    // generate a closed workload injection profile
-    // with levels of 10, 15, 20, 25 and 30 concurrent users
-    // each level lasting 10 seconds
-    // separated by linear ramps lasting 10 seconds
-    //  incrementConcurrentUsers(users)
-    //   .times(numberOfRamps)
-    // .eachLevelLasting(steadyPeriodDuration)
-    //  .separatedByRampsLasting(rampDuration)
-    //  .startingFrom(0)
+    nothingFor(nothing),
     incrementUsersPerSec(users)
       .times(numberOfRamps)
-      .eachLevelLasting(steadyDuration)
+      .eachLevelLasting(steadyPeriodDuration)
       .separatedByRampsLasting(rampDuration)
       .startingFrom(0)
-  ).protocols(httpProtocol)
-)
+  )).protocols(httpProtocol).maxDuration(totalTestDuration)
+
 
 }
+
