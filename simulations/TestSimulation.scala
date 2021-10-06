@@ -139,7 +139,7 @@ class TestSimulation extends Simulation {
   setUp(
   scn.inject(
     nothingFor(nothing),
-    incrementUsersPerSec(users)
+     incrementConcurrentUsers(users)
       .times(numberOfRamps)
       .eachLevelLasting(steadyPeriodDuration)
       .separatedByRampsLasting(rampDuration)
